@@ -26,6 +26,7 @@ func newFuncMap() map[string]interface{} {
 	m["dir"] = path.Dir
 	m["map"] = CreateMap
 	m["getenv"] = Getenv
+	m["hasenv"] = HasEnv
 	m["join"] = strings.Join
 	m["datetime"] = time.Now
 	m["toUpper"] = strings.ToUpper
@@ -138,6 +139,13 @@ func Getenv(key string, v ...string) string {
 		return defaultValue
 	}
 	return value
+}
+
+// HasEnv returns true if the variable (which may be empty) is present in
+// the environment. If the variable isn't present in the environment HasEnv returns false.
+func HasEnv(key string) bool {
+	_, ok := os.LookupEnv(key)
+	return ok
 }
 
 // CreateMap creates a key-value map of string -> interface{}
